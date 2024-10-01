@@ -1,12 +1,12 @@
 import numpy as np
 from copy import deepcopy
 
-def FactorizacionLU_Doolittle(matrizA:np.array):
+def FactorizacionLU_Doolittle(matrizA:np.array) -> tuple[np.array,np.array]:
   """
     Procedimiento para factorizar una matriz cuadrada 
     A en el producto de una matriz triangular inferior L 
     y una superior U, haciendo uso de la restricción 
-    de Doolittle.
+    de Doolittle. A = LU.
 
     matrizA : np.array :: Matriz cuadrada
 
@@ -22,3 +22,41 @@ def FactorizacionLU_Doolittle(matrizA:np.array):
       matrizL[fila_i][fila_pivote] = factor_escalamiento
   return matrizL , matrizU
 
+def FactorizacionLU_Choleski(matrizA:np.array) -> np.array:
+  """
+    Procedimiento para factorizar una matriz cuadrada 
+    simétrica A en el producto de una matriz triangular L
+    y de su transpuesta L^T, haciendo uso de la restricción 
+    de Choleski. A = LL^T.
+
+    matrizA : np.array :: Matriz cuadrada simétrica
+
+    Devuelve la matriz L
+  """
+  n = len(matrizA)
+  matrizL = np.zeros((n,n),dtype=float)
+  for index_j in range(n):
+    for index_i in range(index_j,n):
+      __Elemento_ijMatrizL(index_i,index_j,matrizA,matrizL)
+  return matrizL
+
+def __Elemento_ijMatrizL(index_i:int,index_j:int,matrizA:np.array,matrizL:np.array) -> None:
+  """
+    Procedimiento auxiliar para determinar la entrada 
+    (i,j) de la matriz L de la factorización de 
+    Choleski, derivada del producto matricial LL^T 
+    comparado con la matriz A a factorizar. 
+
+    index_i : int :: Indice la fila 
+    index_j : int :: Indice la columna 
+    matrizA : np.array :: Matriz original a factorizar
+    matrizL : np.array :: Matriz resultante de la factorización 
+    y en donde se guardan los elementos calculados
+  """
+  suma_elementos_previos = matrizL[index_i,:index_j]@matrizL[index_j,:index_j]
+  if index_i == index_j:
+    elemento_ij = np.sqrt(matrizA[index_i][index_j] - suma_elementos_previos)
+    matrizL[index_i][index_j] = elemento_ij
+  else:
+    elemento_ij = (matrizA[index_i][index_j] - suma_elementos_previos) / matrizL[index_j][index_j]
+    matrizL[index_i][index_j] = elemento_ij
