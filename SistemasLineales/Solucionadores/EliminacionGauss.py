@@ -9,8 +9,7 @@ def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
     """
         Procedimiento que resuelve el sistema de ecuaciones 
         lineales de la forma Ax=b haciendo uso de Eliminación 
-        de Gauss. No realiza pivoteo, no se recomienda por 
-        lo mismo.
+        de Gauss. No realiza pivoteo.
 
         matrizA : np.array :: Matriz de coeficientes del sistema
         vectorB : np.array :: Vector de términos independientes
