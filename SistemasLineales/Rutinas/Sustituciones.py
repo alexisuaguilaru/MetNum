@@ -17,7 +17,7 @@ def SustitucionRegresiva(matrizU:np.array,vectorB:np.array) -> np.array :
   for fila_pivote in range(n-1,-1,-1):
     vectorX[fila_pivote] -= matrizU[fila_pivote,fila_pivote+1:]@vectorX[fila_pivote+1:]
     vectorX[fila_pivote] /= matrizU[fila_pivote,fila_pivote]
-  return vectorB
+  return vectorX
 
 def SustitucionProgresiva(matrizL:np.array,vectorB:np.array) -> np.array:
   """
