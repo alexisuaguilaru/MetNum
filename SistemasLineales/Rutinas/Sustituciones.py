@@ -33,7 +33,7 @@ def SustitucionProgresiva(matrizL:np.array,vectorB:np.array) -> np.array:
   """
   vectorX = deepcopy(vectorB)
   n = len(matrizL)
-  for fila_pivote in range(n-1):
+  for fila_pivote in range(n):
     vectorX[fila_pivote] /= matrizL[fila_pivote][fila_pivote]
     factores_escalamiento = matrizL[fila_pivote+1:,fila_pivote]
     vectorX[fila_pivote+1:] -= factores_escalamiento*vectorX[fila_pivote]
