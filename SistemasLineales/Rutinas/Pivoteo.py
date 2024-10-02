@@ -73,21 +73,3 @@ def PermutarFilaPivoteo(index_k:int,index_pivoteo:int,matriz_general):
         fila_general_temporal = deepcopy(matriz_general[index_k])
         matriz_general[index_k] = matriz_general[index_pivoteo]
         matriz_general[index_pivoteo] = fila_general_temporal
-
-def DespermutarFilas(vector_permutacion:list,matriz_general:np.array) -> None:
-    """
-        Procedimiento para revertir las permutaciones 
-        realizadas en una matriz general.
-
-        vector_permutacion : list :: Vector que refleja en 
-        qué indice están las filas originales
-        matriz_general : np.array :: Matriz a la que 
-        se quiere regresar a su versión original, sin 
-        ninguna permutación
-
-        No devuelve nada.
-    """
-    matriz_original = np.zeros(matriz_general.shape)
-    for index_permutado , index_original in enumerate(vector_permutacion):
-        matriz_original[index_original] = matriz_general[index_permutado]
-    matriz_general = matriz_original
