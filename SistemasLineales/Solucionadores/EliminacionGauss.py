@@ -4,6 +4,7 @@ from copy import deepcopy
 import sys
 sys.path.insert(1,'../Rutinas')
 from Sustituciones import SustitucionRegresiva
+from Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
 
 def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
     """
@@ -25,3 +26,29 @@ def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
             matrizA[i_index] -= factor_escalamiento*matrizU[k_index]
             vectorX[i_index] -= factor_escalamiento*vectorX[k_index]
     return SustitucionRegresiva(matrizU,vectorX)
+
+def SimulacionEliminacionGaussPivoteo(matrizA:np.array) -> tuple[list,list]:
+    """
+        Procedimiento auxiliar que realiza la eliminación de 
+        Gauss a la matriz A con pivote, para obtener la lista 
+        de la permutación de las filas pivoteadas adecuadamente 
+        y la lista de la permutación que se debe que aplicar 
+        para obtener una matriz pivoteada adecuadamente.
+
+        matrizA : np.array :: Matriz de coeficientes del sistema
+
+        Devuelve la lista de la permutación las filas 
+        pivoteadas y la lista de la permutación a aplicar.
+    """
+    n = len(matrizA)
+    matrizU = deepcopy(matrizA)
+    factores_escala = __FactoresEscala(matrizA)
+    permutacion_filas_pivoteadas = [index_fila for index_fila in range(n)]
+    for index_k in range(n-1):
+        index_pivoteo = PivoteoParcialEscalonado(index_k,matrizU,factores_escala)
+        PermutarFilaPivoteo(index_k,index_pivoteo,permutacion_filas_pivoteadas)
+        for i_index in range(index_k+1,n):
+            factor_escalamiento = matrizU[i_index][index_k] / matrizU[index_k][index_k]
+            matrizA[i_index] -= factor_escalamiento*matrizU[index_k]
+        ActualizarVectorEscala(index_k,matrizU,factores_escala)
+    return permutacion_filas_pivoteadas , __PermutacionInversa(permutacion_filas_pivoteadas) 
