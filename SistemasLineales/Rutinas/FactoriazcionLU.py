@@ -1,6 +1,11 @@
 import numpy as np
 from copy import deepcopy
 
+import sys
+sys.path.insert(1,'../Solucionadores')
+from Pivoteo import AplicarPermutacion
+from EliminacionGauss import SimulacionEliminacionGaussPivoteo
+
 def FactorizacionLU_Doolittle(matrizA:np.array) -> tuple[np.array,np.array]:
   """
     Procedimiento para factorizar una matriz cuadrada 
@@ -60,3 +65,21 @@ def __Elemento_ijMatrizL(index_i:int,index_j:int,matrizA:np.array,matrizL:np.arr
   else:
     elemento_ij = (matrizA[index_i][index_j] - suma_elementos_previos) / matrizL[index_j][index_j]
     matrizL[index_i][index_j] = elemento_ij
+
+def FactorizacionLUPivoteo_Doolittle(matrizA:np.array) -> tuple[np.array,np.array,list[int],list[int]]:
+  """
+    Procedimiento para factorizar una matriz cuadrada 
+    A en el producto de una matriz triangular inferior L 
+    y una superior U, haciendo uso de la restricción 
+    de Doolittle y pivoteo. PA = LU.
+
+    matrizA : np.array :: Matriz cuadrada
+
+    Devuelve las matrices L y U, junto con la 
+    lista de permutaciones de filas pivoteadas y 
+    la lista de la permutación que se le aplica 
+    a la matriz original. 
+  """
+  permutacion_filas_pivoteadas , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
+  matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
+  return *FactorizacionLU_Doolittle(matrizA_pivoteada) , permutacion_filas_pivoteadas , permutacion_filas_originales

@@ -1,8 +1,6 @@
 import numpy as np
 from copy import deepcopy
 
-from Pivoteo import PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , DespermutarFilas
-
 def SustitucionRegresiva(matrizU:np.array,vectorB:np.array) -> np.array :
   """
     Procedimiento para aplicar la sustitución regresiva 
