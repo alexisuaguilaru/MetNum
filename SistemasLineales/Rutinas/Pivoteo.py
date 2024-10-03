@@ -82,7 +82,7 @@ def AplicarPermutacion(permutacion:list[int],matriz_general):
     else:
         matriz_general_permutada = np.zeros(matriz_general.shape)
         for index_original , index_permutado in enumerate(permutacion):
-            matriz_general_permutada[index_permutado] = matriz_general[index_original]
+            matriz_general_permutada[index_permutado] = deepcopy(matriz_general[index_original])
     return matriz_general_permutada
 
 def __FactoresEscala(matrizA:np.array) -> np.array:

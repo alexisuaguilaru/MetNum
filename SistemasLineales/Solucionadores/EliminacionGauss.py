@@ -23,7 +23,7 @@ def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
     for k_index in range(n-1):
         for i_index in range(k_index+1,n):
             factor_escalamiento = matrizU[i_index][k_index] / matrizU[k_index][k_index]
-            matrizA[i_index] -= factor_escalamiento*matrizU[k_index]
+            matrizU[i_index] -= factor_escalamiento*matrizU[k_index]
             vectorX[i_index] -= factor_escalamiento*vectorX[k_index]
     return SustitucionRegresiva(matrizU,vectorX)
 
@@ -49,6 +49,6 @@ def SimulacionEliminacionGaussPivoteo(matrizA:np.array) -> tuple[list,list]:
         PermutarFilaPivoteo(index_k,index_pivoteo,permutacion_filas_pivoteadas)
         for i_index in range(index_k+1,n):
             factor_escalamiento = matrizU[i_index][index_k] / matrizU[index_k][index_k]
-            matrizA[i_index] -= factor_escalamiento*matrizU[index_k]
+            matrizU[i_index] -= factor_escalamiento*matrizU[index_k]
         ActualizarVectorEscala(index_k,matrizU,factores_escala)
     return permutacion_filas_pivoteadas , __PermutacionInversa(permutacion_filas_pivoteadas) 
