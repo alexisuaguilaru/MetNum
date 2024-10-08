@@ -6,7 +6,7 @@ import sys
 sys.path.insert(1,'../Rutinas')
 from Pivoteo import AplicarPermutacion
 
-def MetodoJacobi(matrizA:np.array,vectorB:np.array,limite_inferior:float=-10,limite_superior:float=10,tolerancia:float=1e-15):
+def MetodoJacobi(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
@@ -17,11 +17,7 @@ def MetodoJacobi(matrizA:np.array,vectorB:np.array,limite_inferior:float=-10,lim
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
-        limite_inferior : float :: Límite 
-        inferior de la estimación inicial
-        limite_superior : float :: Límite 
-        superior de la estimación inicial
-        tolerancia : float :: Tolerancia 
+        tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
 
@@ -29,15 +25,16 @@ def MetodoJacobi(matrizA:np.array,vectorB:np.array,limite_inferior:float=-10,lim
         aproximado
     """
     n = len(vectorB)
-    vectorX = np.random.random(n)*limite_inferior + (limite_superior-limite_inferior)
-    vectorX_actualizado = np.random.random(n)*limite_inferior + (limite_superior-limite_inferior)
-    while not np.any(np.abs(vectorX-vectorX_actualizado) < tolerancia):
+    vectorX = np.zeros(n)
+    vectorX_actualizado = np.zeros(n)
+    vectorResto = vectorB - matrizA@vectorX 
+    while np.linalg.norm(vectorResto) > tolerancia_error:
         for i_index in range(n):
             vectorX_actualizado[i_index] = (vectorB[i_index] - matrizA[i_index,:i_index]@vectorX[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index]
         vectorX = deepcopy(vectorX_actualizado)
+        vectorResto = vectorB - matrizA@vectorX
     return vectorX
-
-def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,limite_inferior:float=-10,limite_superior:float=10,tolerancia:float=1e-15):
+def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
@@ -48,11 +45,7 @@ def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,limite_inferior:float=-1
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
-        limite_inferior : float :: Límite 
-        inferior de la estimación inicial
-        limite_superior : float :: Límite 
-        superior de la estimación inicial
-        tolerancia : float :: Tolerancia 
+        tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
 
@@ -60,15 +53,15 @@ def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,limite_inferior:float=-1
         aproximado
     """
     n = len(vectorB)
-    vectorX = np.random.random(n)*limite_inferior + (limite_superior-limite_inferior)
-    vectorX_actualizado = np.random.random(n)*limite_inferior + (limite_superior-limite_inferior)
-    while not np.any(np.abs(vectorX-vectorX_actualizado) < tolerancia):
+    vectorX = np.zeros(n)
+    vectorResto = vectorB - matrizA@vectorX 
+    while np.linalg.norm(vectorResto) > tolerancia_error:
         for i_index in range(n):
-            vectorX_actualizado[i_index] = (vectorB[i_index] - matrizA[i_index,:i_index]@vectorX_actualizado[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index]
-        vectorX = deepcopy(vectorX_actualizado)
+            vectorX[i_index] = (vectorB[i_index] - matrizA[i_index,:i_index]@vectorX[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index]
+        vectorResto = vectorB - matrizA@vectorX
     return vectorX
 
-def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,limite_inferior:float=-10,limite_superior:float=10,tolerancia:float=1e-15):
+def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
@@ -80,11 +73,7 @@ def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,limite_inferior:float=
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
-        limite_inferior : float :: Límite 
-        inferior de la estimación inicial
-        limite_superior : float :: Límite 
-        superior de la estimación inicial
-        tolerancia : float :: Tolerancia 
+        tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
 
@@ -94,9 +83,9 @@ def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,limite_inferior:float=
     _ , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
     matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
     vectorB_pivoteada = AplicarPermutacion(permutacion_filas_originales,vectorB)
-    return MetodoJacobi(matrizA_pivoteada,vectorB_pivoteada,limite_inferior,limite_superior,tolerancia)
+    return MetodoJacobi(matrizA_pivoteada,vectorB_pivoteada,tolerancia_error)
 
-def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,limite_inferior:float=-10,limite_superior:float=10,tolerancia:float=1e-15):
+def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
@@ -109,11 +98,7 @@ def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,limite_inferior:f
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
-        limite_inferior : float :: Límite 
-        inferior de la estimación inicial
-        limite_superior : float :: Límite 
-        superior de la estimación inicial
-        tolerancia : float :: Tolerancia 
+        tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
 
@@ -123,4 +108,4 @@ def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,limite_inferior:f
     _ , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
     matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
     vectorB_pivoteada = AplicarPermutacion(permutacion_filas_originales,vectorB)
-    return MetodoGaussSeidel(matrizA_pivoteada,vectorB_pivoteada,limite_inferior,limite_superior,tolerancia)
+    return MetodoGaussSeidel(matrizA_pivoteada,vectorB_pivoteada,tolerancia_error)
