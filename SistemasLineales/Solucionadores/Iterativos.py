@@ -58,8 +58,7 @@ def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
 
-# Por pruebas, usar relajación empeora la convergencia
-def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,p_iteraciones:int,tolerancia_error:float=1e-9) -> np.array:
+def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,factorRelajacion:float,tolerancia_error:float=1e-9) -> np.array:
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
@@ -70,9 +69,9 @@ def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,p_iteraciones:int,
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
-        p_iteraciones : int :: Entero que indica 
-        la diferencia que se debe que considerar 
-        para calcular el factor de relajación
+        factorRelajacion : float :: Factor de 
+        relajación que se usa para aumentar 
+        la convergencia del método
         tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
@@ -84,15 +83,10 @@ def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,p_iteraciones:int,
     vectorX = np.zeros(n)
     vectorX_actualizado = np.zeros(n)
     vectorResto = vectorB - matrizA@vectorX 
-    factorRelajacion = 1
-    DiferenciasVectores = []
     while np.linalg.norm(vectorResto) > tolerancia_error:
         for i_index in range(n):
             vectorX_actualizado[i_index] = (vectorB[i_index] - matrizA[i_index,:i_index]@vectorX[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index]
         vectorX_actualizado = factorRelajacion*vectorX_actualizado + (1-factorRelajacion)*vectorX
-        if len(DiferenciasVectores) > (p_iteraciones + 10):
-            factorRelajacion = __FactorRelajacion(DiferenciasVectores,p_iteraciones)
-        DiferenciasVectores.append(np.linalg.norm(vectorX_actualizado-vectorX))
         vectorX = deepcopy(vectorX_actualizado)
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
