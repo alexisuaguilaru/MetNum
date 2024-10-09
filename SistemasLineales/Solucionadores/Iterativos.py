@@ -34,6 +34,7 @@ def MetodoJacobi(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
         vectorX = deepcopy(vectorX_actualizado)
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
+
 def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
@@ -60,52 +61,3 @@ def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1
             vectorX[i_index] = (vectorB[i_index] - matrizA[i_index,:i_index]@vectorX[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index]
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
-
-def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
-    """
-        Procedimiento para determinar una 
-        solución aproximada al sistema de 
-        ecuaciones lineales Ax=b haciendo 
-        uso de método de Jacobi, realizando 
-        un pivoteo adecuado al sistema.
-    
-        matrizA : np.array :: Matriz de 
-        coeficientes del sistema
-        vectorB : np.array :: Vector de 
-        términos independientes
-        tolerancia_error : float :: Tolerancia 
-        para indicar que el método convergió 
-        a una solución.
-
-        Devuelve vector solución X 
-        aproximado
-    """
-    _ , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
-    matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
-    vectorB_pivoteada = AplicarPermutacion(permutacion_filas_originales,vectorB)
-    return MetodoJacobi(matrizA_pivoteada,vectorB_pivoteada,tolerancia_error)
-
-def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
-    """
-        Procedimiento para determinar una 
-        solución aproximada al sistema de 
-        ecuaciones lineales Ax=b haciendo 
-        uso de método de Gauss-Seidel, 
-        realizando un pivoteo adecuado 
-        al sistema.
-    
-        matrizA : np.array :: Matriz de 
-        coeficientes del sistema
-        vectorB : np.array :: Vector de 
-        términos independientes
-        tolerancia_error : float :: Tolerancia 
-        para indicar que el método convergió 
-        a una solución.
-
-        Devuelve vector solución X 
-        aproximado
-    """
-    _ , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
-    matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
-    vectorB_pivoteada = AplicarPermutacion(permutacion_filas_originales,vectorB)
-    return MetodoGaussSeidel(matrizA_pivoteada,vectorB_pivoteada,tolerancia_error)
