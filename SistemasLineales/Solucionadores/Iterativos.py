@@ -1,10 +1,6 @@
 import numpy as np
 from copy import deepcopy
-
-from EliminacionGauss import SimulacionEliminacionGaussPivoteo
-import sys 
-sys.path.insert(1,'../Rutinas')
-from Pivoteo import AplicarPermutacion
+import math 
 
 def MetodoJacobi(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
@@ -34,6 +30,7 @@ def MetodoJacobi(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
         vectorX = deepcopy(vectorX_actualizado)
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
+
 def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
@@ -61,18 +58,20 @@ def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
 
-def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
+def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,factorRelajacion:float,tolerancia_error:float=1e-9) -> np.array:
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
         ecuaciones lineales Ax=b haciendo 
-        uso de método de Jacobi, realizando 
-        un pivoteo adecuado al sistema.
+        uso de método de Jacobi.
     
         matrizA : np.array :: Matriz de 
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
+        factorRelajacion : float :: Factor de 
+        relajación que se usa para aumentar 
+        la convergencia del método
         tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
@@ -80,24 +79,32 @@ def MetodoJacobi_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float
         Devuelve vector solución X 
         aproximado
     """
-    _ , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
-    matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
-    vectorB_pivoteada = AplicarPermutacion(permutacion_filas_originales,vectorB)
-    return MetodoJacobi(matrizA_pivoteada,vectorB_pivoteada,tolerancia_error)
+    n = len(vectorB)
+    vectorX = np.zeros(n)
+    vectorX_actualizado = np.zeros(n)
+    vectorResto = vectorB - matrizA@vectorX 
+    while np.linalg.norm(vectorResto) > tolerancia_error:
+        for i_index in range(n):
+            vectorX_actualizado[i_index] = (vectorB[i_index] - matrizA[i_index,:i_index]@vectorX[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index]
+        vectorX_actualizado = factorRelajacion*vectorX_actualizado + (1-factorRelajacion)*vectorX
+        vectorX = deepcopy(vectorX_actualizado)
+        vectorResto = vectorB - matrizA@vectorX
+    return vectorX
 
-def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
+def MetodoGaussSeidel_Relajacion(matrizA:np.array,vectorB:np.array,p_iteraciones:int,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
         ecuaciones lineales Ax=b haciendo 
-        uso de método de Gauss-Seidel, 
-        realizando un pivoteo adecuado 
-        al sistema.
+        uso de método de Gauss-Seidel.
     
         matrizA : np.array :: Matriz de 
         coeficientes del sistema
         vectorB : np.array :: Vector de 
         términos independientes
+        p_iteraciones : int :: Entero que indica 
+        la diferencia que se debe que considerar 
+        para calcular el factor de relajación
         tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
         a una solución.
@@ -105,7 +112,39 @@ def MetodoGaussSeidel_Pivote(matrizA:np.array,vectorB:np.array,tolerancia_error:
         Devuelve vector solución X 
         aproximado
     """
-    _ , permutacion_filas_originales = SimulacionEliminacionGaussPivoteo(matrizA)
-    matrizA_pivoteada = AplicarPermutacion(permutacion_filas_originales,matrizA)
-    vectorB_pivoteada = AplicarPermutacion(permutacion_filas_originales,vectorB)
-    return MetodoGaussSeidel(matrizA_pivoteada,vectorB_pivoteada,tolerancia_error)
+    n = len(vectorB)
+    vectorX = np.zeros(n)
+    vectorX_actualizado = np.zeros(n)
+    vectorResto = vectorB - matrizA@vectorX 
+    factorRelajacion = 1
+    DiferenciasVectores = []
+    while np.linalg.norm(vectorResto) > tolerancia_error:
+        for i_index in range(n):
+            vectorX_actualizado[i_index] = factorRelajacion*(vectorB[i_index] - matrizA[i_index,:i_index]@vectorX_actualizado[:i_index] - matrizA[i_index,i_index+1:]@vectorX[i_index+1:])/matrizA[i_index][i_index] + (1-factorRelajacion)*vectorX[i_index]
+        if len(DiferenciasVectores) > (p_iteraciones + 10):
+            factorRelajacion = __FactorRelajacion(DiferenciasVectores,p_iteraciones)
+        DiferenciasVectores.append(np.linalg.norm(vectorX_actualizado-vectorX))
+        vectorX = deepcopy(vectorX_actualizado)
+        vectorResto = vectorB - matrizA@vectorX
+    return vectorX
+
+def __FactorRelajacion(DiferenciaVectores:list[float],p_iteraciones:int) -> float:
+    """
+        Procedimiento auxliar para calcular 
+        el factor de relajación optimo dado 
+        las diferencias entre vectores 
+        consecutivos.
+
+        DiferenciaVectores : list[float] :: Lista 
+        con las normas de las diferencias entre los 
+        vectores obtenidos del método iterativo
+        p_iteraciones : int :: Entero que indica 
+        la diferencia que se debe que considerar 
+        para calcular el factor de relajación
+
+        Devuelve el factor de relajación.
+    """
+    valorDiferencias = DiferenciaVectores[-1]/DiferenciaVectores[-p_iteraciones-1] 
+    valorRaiz = 1 - math.pow(valorDiferencias,1/p_iteraciones)
+    valorCociente = 1 + math.pow(abs(valorRaiz),1/2)
+    return 2/valorCociente
