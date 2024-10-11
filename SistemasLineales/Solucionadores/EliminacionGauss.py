@@ -2,9 +2,9 @@ import numpy as np
 from copy import deepcopy
 
 import sys
-sys.path.insert(1,'../Rutinas')
-from Sustituciones import SustitucionRegresiva
-from Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
+sys.path.insert(1,'../../..')
+from MetNum.SistemasLineales.Rutinas.Sustituciones import SustitucionRegresiva
+from MetNum.SistemasLineales.Rutinas.Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
 
 def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
     """

@@ -2,9 +2,9 @@ import numpy as np
 from copy import deepcopy
 
 import sys
-sys.path.insert(1,'../Solucionadores')
-from Pivoteo import AplicarPermutacion
-from EliminacionGauss import SimulacionEliminacionGaussPivoteo
+sys.path.insert(1,'../../..')
+from MetNum.SistemasLineales.Rutinas.Pivoteo import AplicarPermutacion
+from MetNum.SistemasLineales.Solucionadores.EliminacionGauss import SimulacionEliminacionGaussPivoteo
 
 def FactorizacionLU_Doolittle(matrizA:np.array) -> tuple[np.array,np.array]:
   """
