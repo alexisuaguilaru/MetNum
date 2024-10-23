@@ -1,7 +1,7 @@
 import numpy as np
 from copy import deepcopy
 
-def PivoteoParcialEscalonado(index_k:int,matrizA:np.array,factores_escala:np.array,tolerancia:float=1.0e-14) -> int:
+def PivoteoParcialEscalonado(index_k:int,matrizA:np.ndarray,factores_escala:np.ndarray,tolerancia:float=1.0e-14) -> int:
     """
         Procedimiento para aplicar pivoteo parcial 
         escalonado sobre la columna k de la matriz 
@@ -11,9 +11,9 @@ def PivoteoParcialEscalonado(index_k:int,matrizA:np.array,factores_escala:np.arr
 
         index_k : int :: Indice de la columna sobre 
         la cual se hará pivote
-        matrizA : np.array :: Matriz en la que se 
+        matrizA : np.ndarray :: Matriz en la que se 
         aplica el pivote 
-        factores_escala : np.array :: Vector de 
+        factores_escala : np.ndarray :: Vector de 
         factores de escala de la matriz
         tolerancia : float :: Tolerancia para 
         considerar una matriz como singular
@@ -26,13 +26,13 @@ def PivoteoParcialEscalonado(index_k:int,matrizA:np.array,factores_escala:np.arr
     PermutarFilaPivoteo(index_k,index_pivoteo,matrizA)
     return index_pivoteo
 
-def ActualizarVectorEscala(index_k:int,matrizA:np.array,factores_escala:np.array) -> None:
+def ActualizarVectorEscala(index_k:int,matrizA:np.ndarray,factores_escala:np.ndarray) -> None:
     """
         index_k : int :: Indice sobre el cual 
         se va actualizar el vector de escalas
-        matrizA : np.array :: Matriz en la 
+        matrizA : np.ndarray :: Matriz en la 
         que se base para los factores de escalar
-        factores_escala : np.array :: Vector de 
+        factores_escala : np.ndarray :: Vector de 
         escala el cual se actualiza.
 
         No devuelve nada.
@@ -85,12 +85,12 @@ def AplicarPermutacion(permutacion:list[int],matriz_general):
             matriz_general_permutada[index_permutado] = deepcopy(matriz_general[index_original])
     return matriz_general_permutada
 
-def __FactoresEscala(matrizA:np.array) -> np.array:
+def __FactoresEscala(matrizA:np.ndarray) -> np.ndarray:
     """
         Procedimiento auxiliar para inicializar 
         los factores de escala asociados a la matriz A
 
-        matrizA : np.array :: Matriz de la que 
+        matrizA : np.ndarray :: Matriz de la que 
         se determinan los factores de escala
     """
     return np.apply_over_axes(np.max,np.abs(matrizA),[1])

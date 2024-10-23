@@ -2,16 +2,16 @@ import numpy as np
 from copy import deepcopy
 import math 
 
-def MetodoJacobi(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
+def MetodoJacobi(matrizA:np.ndarray,vectorB:np.ndarray,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
         ecuaciones lineales Ax=b haciendo 
         uso de método de Jacobi.
     
-        matrizA : np.array :: Matriz de 
+        matrizA : np.ndarray :: Matriz de 
         coeficientes del sistema
-        vectorB : np.array :: Vector de 
+        vectorB : np.ndarray :: Vector de 
         términos independientes
         tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
@@ -31,16 +31,16 @@ def MetodoJacobi(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
 
-def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1e-9):
+def MetodoGaussSeidel(matrizA:np.ndarray,vectorB:np.ndarray,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
         ecuaciones lineales Ax=b haciendo 
         uso de método de Gauss-Seidel.
     
-        matrizA : np.array :: Matriz de 
+        matrizA : np.ndarray :: Matriz de 
         coeficientes del sistema
-        vectorB : np.array :: Vector de 
+        vectorB : np.ndarray :: Vector de 
         términos independientes
         tolerancia_error : float :: Tolerancia 
         para indicar que el método convergió 
@@ -58,16 +58,16 @@ def MetodoGaussSeidel(matrizA:np.array,vectorB:np.array,tolerancia_error:float=1
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
 
-def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,factorRelajacion:float,tolerancia_error:float=1e-9) -> np.array:
+def MetodoJacobi_Relajacion(matrizA:np.ndarray,vectorB:np.ndarray,factorRelajacion:float,tolerancia_error:float=1e-9) -> np.ndarray:
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
         ecuaciones lineales Ax=b haciendo 
         uso de método de Jacobi.
     
-        matrizA : np.array :: Matriz de 
+        matrizA : np.ndarray :: Matriz de 
         coeficientes del sistema
-        vectorB : np.array :: Vector de 
+        vectorB : np.ndarray :: Vector de 
         términos independientes
         factorRelajacion : float :: Factor de 
         relajación que se usa para aumentar 
@@ -91,16 +91,16 @@ def MetodoJacobi_Relajacion(matrizA:np.array,vectorB:np.array,factorRelajacion:f
         vectorResto = vectorB - matrizA@vectorX
     return vectorX
 
-def MetodoGaussSeidel_Relajacion(matrizA:np.array,vectorB:np.array,p_iteraciones:int,tolerancia_error:float=1e-9):
+def MetodoGaussSeidel_Relajacion(matrizA:np.ndarray,vectorB:np.ndarray,p_iteraciones:int,tolerancia_error:float=1e-9):
     """
         Procedimiento para determinar una 
         solución aproximada al sistema de 
         ecuaciones lineales Ax=b haciendo 
         uso de método de Gauss-Seidel.
     
-        matrizA : np.array :: Matriz de 
+        matrizA : np.ndarray :: Matriz de 
         coeficientes del sistema
-        vectorB : np.array :: Vector de 
+        vectorB : np.ndarray :: Vector de 
         términos independientes
         p_iteraciones : int :: Entero que indica 
         la diferencia que se debe que considerar 

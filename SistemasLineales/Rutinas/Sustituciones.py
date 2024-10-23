@@ -1,14 +1,14 @@
 import numpy as np
 from copy import deepcopy
 
-def SustitucionRegresiva(matrizU:np.array,vectorB:np.array) -> np.array :
+def SustitucionRegresiva(matrizU:np.ndarray,vectorB:np.ndarray) -> np.ndarray :
   """
     Procedimiento para aplicar la sustitución regresiva 
     en la matriz U, suponiendo que sea triangular superior, 
     para obtener un vector X tal que U*X = b. 
 
-    matrizU : np.array :: Matriz triangular superior
-    vectorB : np.array :: Vector de términos independientes
+    matrizU : np.ndarray :: Matriz triangular superior
+    vectorB : np.ndarray :: Vector de términos independientes
 
     Devuelve vector X.
   """
@@ -19,15 +19,15 @@ def SustitucionRegresiva(matrizU:np.array,vectorB:np.array) -> np.array :
     vectorX[fila_pivote] /= matrizU[fila_pivote,fila_pivote]
   return vectorX
 
-def SustitucionProgresiva(matrizL:np.array,vectorB:np.array) -> np.array:
+def SustitucionProgresiva(matrizL:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
   """
     Procedimiento para aplicar la sustitución progresiva 
     en la matriz L, suponiendo que sea triangular inferior, 
     para obtener un vector X tal que L*X = b. 
 
-    matrizL : np.array :: Matriz triangular inferior 
+    matrizL : np.ndarray :: Matriz triangular inferior 
     con unos en la diagonal
-    vectorB : np.array :: Vector de términos independientes
+    vectorB : np.ndarray :: Vector de términos independientes
 
     Devuelve vector X.
   """
