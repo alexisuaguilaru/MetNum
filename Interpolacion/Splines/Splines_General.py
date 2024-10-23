@@ -1,57 +1,32 @@
+import scipy
 import numpy as np
 
-class Splines_General:
-    def __init__(self,conjuntoPuntos:np.array):
+class Spline_General:
+      def __init__(self,conjuntoPuntos:np.ndarray,bc_type):
         """
-            Clase base para calcular y evaluar la 
-            interpolación por splines cúbicos
+            Clase general para la definición y evaluación 
+            de splines cúbicos con diferentes condiciones de 
+            frontera.
 
-            conjuntoPuntos : np.array :: Conjuntos 
-            de puntos que serán interpolados con 
-            la interpolación de Newton
+            conjuntoPuntos : np.array :: Conjuntos de
+            puntos en donde se define el spline
+            bc_type :: Tipo de condición de borde 
+            definida por SciPy para su clase de CubicSpline
         """
         self.puntosX = conjuntoPuntos[:,0]
         self.puntosY = conjuntoPuntos[:,1]
-        self.PolinomiosCubicos()
-
-    def __call__(self,valorX:float):
-        pass
-
-    def PolinomiosCubicos(self):
+        self.Spline = scipy.interpolate.CubicSpline(self.puntosX,self.puntosY,bc_type=bc_type)
+  
+      def __call__(self,puntoX:float) -> float:
         """
-            Método que calcula los polinomios 
-            asociados a los splines cúbicos en 
-            cada par de puntos consecutivos. 
-            Se usa definir la matriz de coeficientes 
-            en términos del término c_i (coeficiente 
-            cuadrático de los polinomios)
-        """
-        self._deltas_X = self.__Deltas(self.puntosX)
-        self._deltas_Y = self.__Deltas(self.puntosY)
-        _vectoresCondicionesFrontera = self._CondicionesFrontera()
+          Método que permite evaluar el spline
+          en un perteneciente al intervalo de
+          definición
+  
+          puntoX : float :: Punto en donde
+          se está evaluando el spline
 
-    def _CondicionesFrontera(self) -> list[list[float]]:
+          Devuelve el valor que toma el spline 
+          en el punto dado.
         """
-            Método interno que devuelve las 
-            condiciones de frontera definidas para 
-            el caso del spline, en términos de los 
-            coeficientes c_i.
-
-            Devuelve una lista con las filas 
-            relacionadas con las condiciones de frontera.        
-        """
-        return None
-
-    def __Deltas(self,puntos:np.array) -> np.array:
-        """
-            Método auxiliar para calcular los 
-            incrementos sobre un mismo eje en 
-            un conjunto de observaciones.
-
-            puntos : np.array :: Conjunto de 
-            observaciones sobre las que se 
-            calculan los incrementos
-
-            Devuelve el vector de los incrementos
-        """
-        return puntos[1:] - puntos[:-1]
+        return self.Spline(puntoX)
