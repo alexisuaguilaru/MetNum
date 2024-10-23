@@ -2,12 +2,12 @@ import numpy as np
 from copy import deepcopy
 
 class InterpolacionPolinomial_Lagrange:
-    def __init__(self,conjuntoPuntos:np.array):
+    def __init__(self,conjuntoPuntos:np.ndarray):
         """
             Clase para calcular y evaluar el 
             polinomio interpolante de Lagrange.
 
-            conjuntoPuntos : np.array :: Conjuntos 
+            conjuntoPuntos : np.ndarray :: Conjuntos 
             de puntos que serán interpolados con 
             la interpolación de Lagrange
         """
@@ -35,7 +35,7 @@ class InterpolacionPolinomial_Lagrange:
         polinomiosComponentesEvaluados /= self.coeficientesPolinomiosComponentes
         return polinomiosComponentesEvaluados@self.puntosY
 
-    def __CalcularCoeficientesPolinomiosComponentes(self) -> np.array:
+    def __CalcularCoeficientesPolinomiosComponentes(self) -> np.ndarray:
         """
             Método para calcular los coeficientes 
             de los polinomios componentes.

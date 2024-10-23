@@ -6,14 +6,14 @@ sys.path.insert(1,'../../..')
 from MetNum.SistemasLineales.Rutinas.Sustituciones import SustitucionRegresiva
 from MetNum.SistemasLineales.Rutinas.Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
 
-def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
+def EliminacionGauss(matrizA:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
     """
         Procedimiento que resuelve el sistema de ecuaciones 
         lineales de la forma Ax=b haciendo uso de Eliminación 
         de Gauss. No realiza pivoteo.
 
-        matrizA : np.array :: Matriz de coeficientes del sistema
-        vectorB : np.array :: Vector de términos independientes
+        matrizA : np.ndarray :: Matriz de coeficientes del sistema
+        vectorB : np.ndarray :: Vector de términos independientes
 
         Devuelve vector X.
     """
@@ -27,7 +27,7 @@ def EliminacionGauss(matrizA:np.array,vectorB:np.array) -> np.array:
             vectorX[i_index] -= factor_escalamiento*vectorX[k_index]
     return SustitucionRegresiva(matrizU,vectorX)
 
-def SimulacionEliminacionGaussPivoteo(matrizA:np.array) -> tuple[list,list]:
+def SimulacionEliminacionGaussPivoteo(matrizA:np.ndarray) -> tuple[list,list]:
     """
         Procedimiento auxiliar que realiza la eliminación de 
         Gauss a la matriz A con pivote, para obtener la lista 
@@ -35,7 +35,7 @@ def SimulacionEliminacionGaussPivoteo(matrizA:np.array) -> tuple[list,list]:
         y la lista de la permutación que se debe que aplicar 
         para obtener una matriz pivoteada adecuadamente.
 
-        matrizA : np.array :: Matriz de coeficientes del sistema
+        matrizA : np.ndarray :: Matriz de coeficientes del sistema
 
         Devuelve la lista de la permutación las filas 
         pivoteadas y la lista de la permutación a aplicar.

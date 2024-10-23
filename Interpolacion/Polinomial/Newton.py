@@ -1,12 +1,12 @@
 import numpy as np
 
 class InterpolacionPolinomial_Newton:
-    def __init__(self,conjuntoPuntos:np.array):
+    def __init__(self,conjuntoPuntos:np.ndarray):
         """
             Clase para calcular y evaluar el 
             polinomio interpolante de Newton.
 
-            conjuntoPuntos : np.array :: Conjuntos 
+            conjuntoPuntos : np.ndarray :: Conjuntos 
             de puntos que serán interpolados con 
             la interpolación de Newton
         """
@@ -33,14 +33,14 @@ class InterpolacionPolinomial_Newton:
             polinomioEvaluado += coeficientePolinomio*valorVariable
         return polinomioEvaluado
 
-    def addNodo(self,nodo:np.array) -> None:
+    def addNodo(self,nodo:np.ndarray) -> None:
         """
             Método para añadir un nuevo 
             nodo a la interpolación. 
             Calcula el coeficiente asociado 
             a este nodo.
 
-            nodo : np.array :: Nodo que se 
+            nodo : np.ndarray :: Nodo que se 
             va a añadir a la interpolación
 
             No devuelve nada.
