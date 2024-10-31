@@ -2,34 +2,34 @@ import numpy as np
 from copy import deepcopy
 
 import sys
-sys.path.insert(1,'../Rutinas')
-from Sustituciones import SustitucionRegresiva , SustitucionProgresiva
-from Pivoteo import AplicarPermutacion
+sys.path.insert(1,'../../..')
+from MetNum.SistemasLineales.Rutinas.Sustituciones import SustitucionRegresiva , SustitucionProgresiva
+from MetNum.SistemasLineales.Rutinas.Pivoteo import AplicarPermutacion
 
-def SistemaLU(matrizL:np.array,matrizU:np.array,vectorB:np.array) -> np.array:
+def SistemaLU(matrizL:np.ndarray,matrizU:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
     """
         Procedimiento que resuelve el sistema de ecuaciones 
         lineales de la forma LUx=b haciendo uso de sustituciones 
         progresiva y regresiva. No realiza pivoteo.
 
-        matrizL : np.array :: Matriz triangular inferior 
-        matrizU : np.array :: Matriz triangular superior
-        vectorB : np.array :: Vector de términos independientes
+        matrizL : np.ndarray :: Matriz triangular inferior 
+        matrizU : np.ndarray :: Matriz triangular superior
+        vectorB : np.ndarray :: Vector de términos independientes
 
         Devuelve el vector X.
     """
     vectorY = SustitucionProgresiva(matrizL,vectorB)
     return SustitucionRegresiva(matrizU,vectorY)
 
-def SistemaLU_Pivoteo(matrizL:np.array,matrizU:np.array,vectorB:np.array,permutacion_filas_originales:list[int]) -> np.array:
+def SistemaLU_Pivoteo(matrizL:np.ndarray,matrizU:np.ndarray,vectorB:np.ndarray,permutacion_filas_originales:list[int]) -> np.ndarray:
     """
         Procedimiento que resuelve el sistema de ecuaciones 
         lineales de la forma LUx=b haciendo uso de sustituciones 
         progresiva y regresiva, y de pivoteo parcial escalonado.
 
-        matrizL : np.array :: Matriz triangular inferior 
-        matrizU : np.array :: Matriz triangular superior
-        vectorB : np.array :: Vector de términos independientes
+        matrizL : np.ndarray :: Matriz triangular inferior 
+        matrizU : np.ndarray :: Matriz triangular superior
+        vectorB : np.ndarray :: Vector de términos independientes
         permutacion_filas_originales : list[int] :: Permutación 
         de las filas sin pivotear para tenerlas pivoteadas
 

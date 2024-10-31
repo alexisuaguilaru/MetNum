@@ -2,12 +2,11 @@ import numpy as np
 from copy import deepcopy
 
 import sys
-sys.path.insert(1,'../Rutinas')
-from FactoriazcionLU import FactorizacionLU_Choleski
-sys.path.insert(1,'../Solucionadores')
-from SistemaLU import SistemaLU
+sys.path.insert(1,'../../..')
+from MetNum.SistemasLineales.Rutinas.FactoriazcionLU import FactorizacionLU_Choleski
+from MetNum.SistemasLineales.Solucionadores.SistemaLU import SistemaLU
 
-def InvertirMatrizSimetrica(matrizA:np.array) -> np.array:
+def InvertirMatrizSimetrica(matrizA:np.ndarray) -> np.ndarray:
     """
         Procedimiento que invierte una matriz 
         simétrica haciendo uso de su factorización 
@@ -16,7 +15,7 @@ def InvertirMatrizSimetrica(matrizA:np.array) -> np.array:
         vectores columna de la matriz identidad. 
         No realiza pivoteo.
 
-        matrizA : np.array :: Matriz simétrica
+        matrizA : np.ndarray :: Matriz simétrica
 
         Devuelve la matriz inversa de A.
     """
