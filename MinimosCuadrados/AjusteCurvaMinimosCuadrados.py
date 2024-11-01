@@ -1,8 +1,6 @@
 import numpy as np
 
-import sys
-sys.path.insert(2,'../..')
-from MetNum.SistemasLineales.Solucionadores.EliminacionGauss import EliminacionGaussPivoteo
+from ..SistemasLineales import EliminacionGaussPivoteo
 
 class AjusteCurva:
     def __init__(self,ConjuntoFunciones:list,ConjuntoPuntos:np.ndarray):

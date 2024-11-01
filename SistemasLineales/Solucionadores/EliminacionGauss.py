@@ -2,10 +2,7 @@ import numpy as np
 from copy import deepcopy
 
 from ..Rutinas.Sustituciones import SustitucionRegresiva
-
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.SistemasLineales.Rutinas.Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
+from ..Rutinas.Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
 
 def EliminacionGauss(matrizA:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
     """

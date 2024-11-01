@@ -1,10 +1,8 @@
 import numpy as np
 from copy import deepcopy
 
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.SistemasLineales.Rutinas.Sustituciones import SustitucionRegresiva , SustitucionProgresiva
-from MetNum.SistemasLineales.Rutinas.Pivoteo import AplicarPermutacion
+from ..Rutinas.Sustituciones import SustitucionRegresiva , SustitucionProgresiva
+from ..Rutinas.Pivoteo import AplicarPermutacion
 
 def SistemaLU(matrizL:np.ndarray,matrizU:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
     """

@@ -1,6 +1,6 @@
 import numpy as np
 
-from Spline_CurvaturaAjustadaAut import Spline_CurvaturaAjustadaAut
+from .Spline_CurvaturaAjustadaAut import Spline_CurvaturaAjustadaAut
 
 class Spline_NaturalAut(Spline_CurvaturaAjustadaAut):
     def __init__(self, conjuntoPuntos:np.ndarray):

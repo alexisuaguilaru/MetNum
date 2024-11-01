@@ -1,6 +1,6 @@
 import numpy as np
 
-from RegresionPolinomial import RegresionPolinomial
+from .RegresionPolinomial import RegresionPolinomial
 
 class RegresionLineal(RegresionPolinomial):
   def __init__(self,ConjuntoPuntos:np.ndarray):

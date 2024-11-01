@@ -1,6 +1,6 @@
 import numpy as np
 
-from AjusteCurvaMinimosCuadrados import AjusteCurva
+from .AjusteCurvaMinimosCuadrados import AjusteCurva
 
 class RegresionPolinomial(AjusteCurva):
     def __init__(self,ConjuntoPuntos:np.ndarray,OrdenPolinomio:int):
