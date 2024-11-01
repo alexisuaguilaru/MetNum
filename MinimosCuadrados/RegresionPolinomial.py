@@ -5,7 +5,9 @@ from AjusteCurvaMinimosCuadrados import AjusteCurva
 class RegresionPolinomial(AjusteCurva):
     def __init__(self,ConjuntoPuntos:np.ndarray,OrdenPolinomio:int):
         """
-            Clase para realizar regresión polinomial.
+            Clase para realizar regresión polinomial 
+            sobre un conjunto de datos usando un 
+            polinomio de orden N.
 
             ConjuntoPuntos : np.ndarray :: Conjunto 
             de datos que se usan para ajustar la 
