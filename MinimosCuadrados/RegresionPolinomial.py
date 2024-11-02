@@ -19,5 +19,19 @@ class RegresionPolinomial(AjusteCurva):
             Conjunto de errores o error experimental 
             asociada a cada punto
         """
-        conjuntoFunciones = [lambda x: x**i for i in range(OrdenPolinomio+1)]
+        conjuntoFunciones = [self.__PotenciaPolinomio(potencia) for potencia in range(OrdenPolinomio+1)]
         super().__init__(conjuntoFunciones,ConjuntoPuntos,ErroresExperimentales)
+
+    def __PotenciaPolinomio(self,potencia:int):
+        """
+            Función auxiliar que devuelve 
+            una función para evaluar x a 
+            una potencia.
+
+            potencia : int :: Potencia a 
+            la que se eleva el argumento
+
+            Devuelve una función lambda 
+            que evalúa x**potencia
+        """
+        return lambda x: x**potencia

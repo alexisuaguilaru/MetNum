@@ -59,5 +59,5 @@ class AjusteCurva:
             funcionesEvaluadas.append([funcionBase(valorX) for valorX in self.puntosX])
         funcionesEvaluadas = np.array(funcionesEvaluadas,dtype=float)/self.ErroresExperimentales
         matrizErrorDerivado = funcionesEvaluadas@funcionesEvaluadas.T
-        vectorIndependienteErrorDerivado = funcionesEvaluadas@self.puntosY.T
+        vectorIndependienteErrorDerivado = funcionesEvaluadas@(self.puntosY.T/self.ErroresExperimentales)
         self.__coeficientesCombinacionesLineales = EliminacionGaussPivoteo(matrizErrorDerivado,vectorIndependienteErrorDerivado)
