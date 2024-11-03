@@ -1,10 +1,8 @@
 import numpy as np
 from copy import deepcopy
 
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.SistemasLineales.Rutinas.Sustituciones import SustitucionRegresiva
-from MetNum.SistemasLineales.Rutinas.Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
+from ..Rutinas.Sustituciones import SustitucionRegresiva
+from ..Rutinas.Pivoteo import __FactoresEscala , PivoteoParcialEscalonado , PermutarFilaPivoteo , ActualizarVectorEscala , __PermutacionInversa
 
 def EliminacionGauss(matrizA:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
     """
@@ -25,6 +23,31 @@ def EliminacionGauss(matrizA:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
             factor_escalamiento = matrizU[i_index][k_index] / matrizU[k_index][k_index]
             matrizU[i_index] -= factor_escalamiento*matrizU[k_index]
             vectorX[i_index] -= factor_escalamiento*vectorX[k_index]
+    return SustitucionRegresiva(matrizU,vectorX)
+
+def EliminacionGaussPivoteo(matrizA:np.ndarray,vectorB:np.ndarray) -> np.ndarray:
+    """
+        Procedimiento que resuelve el sistema de ecuaciones
+        lineales de la forma Ax=b haciendo uso de Eliminación
+        de Gauss realizando pivoteo.
+
+        matrizA : np.ndarray :: Matriz de coeficientes del sistema
+        vectorB : np.ndarray :: Vector de términos independientes
+
+        Devuelve vector X.
+    """
+    n = len(matrizA)
+    matrizU = deepcopy(matrizA)
+    vectorX = deepcopy(vectorB)
+    factores_escala = __FactoresEscala(matrizA)
+    for index_k in range(n-1):
+        index_pivoteo = PivoteoParcialEscalonado(index_k,matrizU,factores_escala)
+        PermutarFilaPivoteo(index_k,index_pivoteo,vectorX)
+        for i_index in range(index_k+1,n):
+            factor_escalamiento = matrizU[i_index][index_k] / matrizU[index_k][index_k]
+            matrizU[i_index] -= factor_escalamiento*matrizU[index_k]
+            vectorX[i_index] -= factor_escalamiento*vectorX[index_k]
+        ActualizarVectorEscala(index_k,matrizU,factores_escala)
     return SustitucionRegresiva(matrizU,vectorX)
 
 def SimulacionEliminacionGaussPivoteo(matrizA:np.ndarray) -> tuple[list,list]:

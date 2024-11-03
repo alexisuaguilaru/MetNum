@@ -1,7 +1,7 @@
 import numpy as np
 from copy import deepcopy
 
-def PivoteoParcialEscalonado(index_k:int,matrizA:np.ndarray,factores_escala:np.ndarray,tolerancia:float=1.0e-14) -> int:
+def PivoteoParcialEscalonado(index_k:int,matrizA:np.ndarray,factores_escala:np.ndarray) -> int:
     """
         Procedimiento para aplicar pivoteo parcial 
         escalonado sobre la columna k de la matriz 
@@ -15,14 +15,11 @@ def PivoteoParcialEscalonado(index_k:int,matrizA:np.ndarray,factores_escala:np.n
         aplica el pivote 
         factores_escala : np.ndarray :: Vector de 
         factores de escala de la matriz
-        tolerancia : float :: Tolerancia para 
-        considerar una matriz como singular
 
         Devuelve el indice de la fila con la cual 
         se intercambio para hacer pivoteo
     """
     index_pivoteo = np.argmax(np.abs(matrizA[index_k:,index_k])/factores_escala[index_k:].T) + index_k
-    if np.abs(factores_escala[index_pivoteo]) < tolerancia: raise BaseException('Matriz Singular')
     PermutarFilaPivoteo(index_k,index_pivoteo,matrizA)
     return index_pivoteo
 

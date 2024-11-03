@@ -1,6 +1,6 @@
 import numpy as np
 
-from Spline_GeneralAut import Spline_GeneralAut
+from .Spline_GeneralAut import Spline_GeneralAut
 
 class Spline_ParabolicoAut(Spline_GeneralAut):
     def __init__(self,conjuntoPuntos:np.ndarray):

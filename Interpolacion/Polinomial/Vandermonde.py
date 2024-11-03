@@ -1,8 +1,6 @@
 import numpy as np
 
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.SistemasLineales.Solucionadores.EliminacionGauss import EliminacionGauss
+from ...SistemasLineales import EliminacionGauss
 
 class InterpolacionPolinomial_Vandermonde:
     def __init__(self,conjuntoPuntos:np.ndarray):

@@ -1,10 +1,7 @@
 import numpy as np
-from copy import deepcopy
 
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.SistemasLineales.Rutinas.FactoriazcionLU import FactorizacionLU_Choleski
-from MetNum.SistemasLineales.Solucionadores.SistemaLU import SistemaLU
+from ..Rutinas.FactoriazcionLU import FactorizacionLU_Choleski
+from ..Solucionadores.SistemaLU import SistemaLU
 
 def InvertirMatrizSimetrica(matrizA:np.ndarray) -> np.ndarray:
     """

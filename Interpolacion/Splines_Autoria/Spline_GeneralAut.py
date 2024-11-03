@@ -1,8 +1,6 @@
 import numpy as np
 
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.SistemasLineales.Solucionadores.Iterativos import MetodoGaussSeidel
+from ...SistemasLineales import MetodoGaussSeidel
 
 class Spline_GeneralAut:
     def __init__(self,conjuntoPuntos:np.array):
