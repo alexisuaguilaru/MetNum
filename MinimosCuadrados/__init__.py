@@ -1,4 +1,4 @@
-from .AjusteCurvaMinimosCuadrados import AjusteCurva
+from .AjusteCurva import AjusteCurva
 from .RegresionPolinomial import RegresionPolinomial
 from .RegresionLineal import RegresionLineal
 
