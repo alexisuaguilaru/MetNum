@@ -28,6 +28,7 @@ class AjusteCurva:
             ErroresExperimentales = np.ones(len(ConjuntoPuntos))*ErroresExperimentales
         self.ErroresExperimentales = ErroresExperimentales
         self.__Fit()
+        self.__CalidadAjuste()
 
     def __call__(self,valorX:float) -> float:
         """
@@ -61,3 +62,15 @@ class AjusteCurva:
         matrizErrorDerivado = funcionesEvaluadas@funcionesEvaluadas.T
         vectorIndependienteErrorDerivado = funcionesEvaluadas@(self.puntosY.T/self.ErroresExperimentales)
         self.__coeficientesCombinacionesLineales = EliminacionGaussPivoteo(matrizErrorDerivado,vectorIndependienteErrorDerivado)
+
+    def __CalidadAjuste(self):
+        """
+            Método auxiliar que permite 
+            calcular la métricca de la 
+            calidad del ajuste usando 
+            el error del ajuste normalizado
+        """
+        CalidadAjuste = 0
+        for valorY , valorX , errorExperimental in zip(self.puntosY,self.puntosX,self.ErroresExperimentales):
+            CalidadAjuste += ((valorY - self.__call__(valorX))/errorExperimental)**2
+        self.CalidadAjuste = CalidadAjuste /  (len(self.puntosX) - len(self.ConjuntoFunciones))
