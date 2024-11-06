@@ -1,17 +1,17 @@
 import numpy as np
 
-import sys
-sys.path.insert(1,'../../..')
-from MetNum.Interpolacion.Splines.Spline_General import Spline_General
+from .Spline_GeneralAut import Spline_GeneralAut
 
-class Spline_CurvaturaAjustada(Spline_General):
-    def __init__(self,conjuntoPuntos:np.ndarray,valorDerivadaS1:float=0,valorDerivadaSn:float=0):
+class Spline_CurvaturaAjustadaAut(Spline_GeneralAut):
+    def __init__(self,conjuntoPuntos:np.ndarray,valorDerivadaS1:float,valorDerivadaSn:float):
         """
-            Clase para la definición y evaluación del
-            spline curvatura ajustada.
-        
-            conjuntoPuntos : np.array :: Conjuntos de
-            puntos en donde se define el spline
+            Clase para calcular y evaluar la interpolación 
+            por splines cúbicos con condiciones de curvatura 
+            ajustada de forma artesanal.         
+
+            conjuntoPuntos : np.ndarray :: Conjuntos
+            de puntos que serán interpolados con
+            la interpolación de Newton
             valorDerivadaS1 : float :: Valor de la 
             segunda derivada en el primer spline S_1 
             en el punto x_1
@@ -19,5 +19,13 @@ class Spline_CurvaturaAjustada(Spline_General):
             segunda derivada en el primer spline S_{n-1} 
             en el punto x_{n-1}
         """
-        bc_type = ((2,valorDerivadaS1),(2,valorDerivadaSn))
-        super().__init__(conjuntoPuntos,bc_type)
+        self._valorDerivadaS1 = valorDerivadaS1
+        self._valorDerivadaSn = valorDerivadaSn
+        super().__init__(conjuntoPuntos)
+
+    def _CondicionFrontera_MatrizC(self) -> tuple[list[float],list[float]]:
+        n = len(self.puntosX)
+        return [2] + [0]*(n-1) , [0]*(n-1) + [2]
+
+    def _CondicionFrontera_VectorIndependiente(self) -> tuple[float,float]:
+        return self._valorDerivadaS1 , self._valorDerivadaSn
