@@ -51,3 +51,41 @@ def DiferenciaHaciaAtras(Funcion,valorX:float,pasoHaciaAtras:float=1e-9) -> floa
         en el punto dado.
     """
     return (Funcion(valorX) - Funcion(valorX - pasoHaciaAtras)) / pasoHaciaAtras
+
+def PrimeraDerivadaTresPuntos(Funcion,valorX:float,paso:float=1e-9) -> float:
+    """
+        Función para calcular la primera derivada 
+        aproximada en un punto dado usando la formula 
+        del punto medio de tres puntos para primera 
+        derivada.
+
+        Funcion :: Función de la que se calcula 
+        su primera derivada
+        valorX : float :: Valor en donde se calcula 
+        la derivada
+        paso : float :: Valor del tamaño del punto 
+        que se usa para calcular la primera derivada
+
+        Devuelve el valor aproximado de la primera derivada 
+        en el punto dado. 
+    """
+    return (Funcion(valorX + paso) - Funcion(valorX - paso))/(2*paso)
+
+def SegundaDerivadaTresPuntos(Funcion,valorX:float,paso:float=1e-9) -> float:
+    """
+        Función para calcular la segunda derivada 
+        aproximada en un punto dado usando la formula 
+        del punto medio de tres puntos para segunda 
+        derivada.
+
+        Funcion :: Función de la que se calcula 
+        su segunda derivada
+        valorX : float :: Valor en donde se calcula 
+        la derivada
+        paso : float :: Valor del tamaño del punto 
+        que se usa para calcular la primera derivada
+
+        Devuelve el valor aproximado de la segunda derivada 
+        en el punto dado. 
+    """
+    return (Funcion(valorX + paso) - 2*Funcion(valorX) + Funcion(valorX - paso))/(paso**2)

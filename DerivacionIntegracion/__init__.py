@@ -1,3 +1,4 @@
-from .DerivacionNumerica import DiferenciacionHaciaPaso , DiferenciaHaciaDelante , DiferenciaHaciaAtras
+from .DerivacionNumerica import DiferenciacionHaciaPaso , DiferenciaHaciaDelante , DiferenciaHaciaAtras , PrimeraDerivadaTresPuntos , SegundaDerivadaTresPuntos
 
-__all__ = ['DiferenciacionHaciaPaso' , 'DiferenciaHaciaDelante' , 'DiferenciaHaciaAtras']
+__all__ = ['DiferenciacionHaciaPaso' , 'DiferenciaHaciaDelante' , 'DiferenciaHaciaAtras',
+           'PrimeraDerivadaTresPuntos' , 'SegundaDerivadaTresPuntos']
