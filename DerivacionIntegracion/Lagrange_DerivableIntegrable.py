@@ -36,3 +36,21 @@ class InterpolacionPolinomial_Lagrange_DiffInt(InterpolacionPolinomial_Lagrange)
             coeficientesPolinomioComponente_j = coeficientesPolinomioComponente_j*self.puntosY[j_index_PolinomioComponente]/self.coeficientesPolinomiosComponentes[j_index_PolinomioComponente]
             coeficientesPolinomiosComponentes.append(coeficientesPolinomioComponente_j)
         self.coeficientesPolinomioInterpolador = sum(coeficientesPolinomiosComponentes)
+
+    def DerivadaEvaluada(self,valorX:float,ordenDerivada:int=1) -> float:
+        """
+            Método para evaluar la derivada del 
+            orden k en un punto del polinomio. 
+
+            valorX : float :: Punto en donde 
+            se evalúa la derivada del polinomio
+            ordenDerivada : int :: Orden de la 
+            derivada del polinomio
+        """
+        derivadaEvaluada = 0
+        potenciaValorX = 1
+        ordenPolinomioInterpolador = len(self.coeficientesPolinomioInterpolador)
+        for i_esimoTerminoPolinomio in range(ordenDerivada,ordenPolinomioInterpolador):
+            derivadaEvaluada += self.coeficientesPolinomioInterpolador[-i_esimoTerminoPolinomio-1] * (self.Factoriales[i_esimoTerminoPolinomio]/self.Factoriales[i_esimoTerminoPolinomio-ordenDerivada]) * potenciaValorX 
+            potenciaValorX *= valorX
+        return derivadaEvaluada
