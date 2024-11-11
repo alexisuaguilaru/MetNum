@@ -46,6 +46,9 @@ class InterpolacionPolinomial_Lagrange_DiffInt(InterpolacionPolinomial_Lagrange)
             se evalúa la derivada del polinomio
             ordenDerivada : int :: Orden de la 
             derivada del polinomio
+
+            Devuelve el valor de la derivada 
+            evaluada con los parámetros dados.
         """
         derivadaEvaluada = 0
         potenciaValorX = 1
@@ -54,3 +57,26 @@ class InterpolacionPolinomial_Lagrange_DiffInt(InterpolacionPolinomial_Lagrange)
             derivadaEvaluada += self.coeficientesPolinomioInterpolador[-i_esimoTerminoPolinomio-1] * (self.Factoriales[i_esimoTerminoPolinomio]/self.Factoriales[i_esimoTerminoPolinomio-ordenDerivada]) * potenciaValorX 
             potenciaValorX *= valorX
         return derivadaEvaluada
+    
+    def IntegralDefinida(self,limiteInferiorIntegracion:float,limiteSuperiorIntegracion:float)  -> float:
+        """
+            Método para evaluar la integral del 
+            polinomio en los límites de integración 
+            dados.
+
+            limiteInferiorIntegracion : float :: Límite 
+            inferior de integración
+            limiteSuperiorIntegracion : float :: Límite 
+            superior de integración
+
+            Devuelve el valor de la integral evaluada 
+            en los límites de integración dados.
+        """
+        integralEvaluada = 0
+        potenciaValorInferiorIntegracion = 1
+        potenciaValorSuperiorIntegracion = 1
+        for i_esimoTerminoPolinomio , i_esimoCoeficientePolinomio in enumerate(self.coeficientesPolinomioInterpolador[::-1]):
+            potenciaValorInferiorIntegracion *= limiteInferiorIntegracion
+            potenciaValorSuperiorIntegracion *= limiteSuperiorIntegracion
+            integralEvaluada += (i_esimoCoeficientePolinomio/(i_esimoTerminoPolinomio+1)) * (potenciaValorSuperiorIntegracion - potenciaValorInferiorIntegracion) 
+        return integralEvaluada
