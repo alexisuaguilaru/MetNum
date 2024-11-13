@@ -37,6 +37,17 @@ class InterpolacionPolinomial_Lagrange_DiffInt(InterpolacionPolinomial_Lagrange)
             coeficientesPolinomiosComponentes.append(coeficientesPolinomioComponente_j)
         self.coeficientesPolinomioInterpolador = sum(coeficientesPolinomiosComponentes)
 
+    def __CalcularFactoriales(self):
+        """
+            Método auxiliar para calcular los 
+            factoriales de hasta el tamaño del 
+            conjunto de datos
+        """
+        factoriales = [1]
+        for i_Factorial in range(1,len(self.puntosX)):
+            factoriales.append(factoriales[i_Factorial-1]*i_Factorial)
+        self.Factoriales = factoriales
+
     def DerivadaEvaluada(self,valorX:float,ordenDerivada:int=1) -> float:
         """
             Método para evaluar la derivada del 
