@@ -1,6 +1,6 @@
 from .FuncionesAuxiliares import __Signo
 
-def MetodoIncremental(funcion,limiteInferiorIntervalo:float,maxLimiteSuperiorIntervalo:float,incremento:float) -> float:
+def MetodoIncremental(funcion,limiteInferiorIntervalo:float,maxLimiteSuperiorIntervalo:float,incremento:float) -> tuple[float,float] | float:
     """
         Método que permite determinar el límite 
         superior del intervalo en donde se encuentra 
@@ -17,9 +17,9 @@ def MetodoIncremental(funcion,limiteInferiorIntervalo:float,maxLimiteSuperiorInt
         incremento : float :: Valor de los incrementos del 
         límite superior del intervalo
 
-        Devuelve el límite superior del intervalo en caso de 
-        que exista en el rango de búsqueda, en caso contrario 
-        devuelve infinito.
+        Devuelve el intervalo donde se localiza una raíz en 
+        caso de que exista en el rango de búsqueda, en 
+        caso contrario devuelve infinito.
     """
     estimacionAnterior = limiteInferiorIntervalo
     signo_estimacionAnterior = __Signo(funcion(estimacionAnterior))
@@ -29,4 +29,4 @@ def MetodoIncremental(funcion,limiteInferiorIntervalo:float,maxLimiteSuperiorInt
             estimacionActual += incremento
             if estimacionActual > maxLimiteSuperiorIntervalo:
                 return float('inf')
-    return estimacionActual
+    return estimacionActual - incremento , estimacionActual
