@@ -8,5 +8,5 @@ En el repositorio se divide en los siguientes submódulos:
 * **Sistemas Lineales**: Relacionado con la solución de sistemas lineales usando métodos directos e iterativos.
 * **Interpolación**: Relacionado con la interpolación polinómica y spline cúbicos.
 * **Mínimos Cuadrados**: Relacionado con el ajuste de curvas, tanto el caso general como polinómicos.
-* **Encontrar Raíces de Funciones Escalares**: Relacionado con los métodos iterativos para encontrar la raíz de una función escalar.
+* **Encontrar Raíces de Funciones Escalares**: Relacionado con los métodos iterativos para encontrar la raíz de una función escalar y de sistemas de ecuaciones no lineales.
 * **Derivación e Integración Numérica**: Relacionado con los algoritmos para derivar e integrar funciones de manera numérica.
