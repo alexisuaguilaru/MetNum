@@ -1,6 +1,6 @@
 # Sistemas Lineales
 
-Este submódulo se encuentran implementado los procedimientos, rutinas y algoritmos relacionados con los **Sistemas Lineales**, como lo son:
+En este módulo se encuentran implementado los procedimientos, rutinas y algoritmos relacionados con los **Sistemas Lineales**, como lo son:
 * Eliminación de Gauss
 * Factorización LU de Doolittle y de Choleski 
 * Rutinas de pivoteo de matrices y de sustituciones progresiva y regresiva
